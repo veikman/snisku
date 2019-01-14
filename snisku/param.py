@@ -9,7 +9,7 @@
 # Local:
 from .exc import ParserError
 from .exc import ValidatorError
-from .exc import ValidatorFailure
+from .exc import ValidationFailure
 
 
 #############
@@ -56,7 +56,7 @@ class Parameter():
             raise ValidatorError(s.format(refined, self.key)) from e
         else:
             s = 'Value ‘{!r}’ is not valid for ‘{}’.'
-            raise ValidatorFailure(s.format(refined, self.key))
+            raise ValidationFailure(s.format(refined, self.key))
 
     def store(self, kvs, value, dumper=None, signal=True):
         """Dump passed value into passed key-value store."""

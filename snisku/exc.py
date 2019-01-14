@@ -14,5 +14,5 @@ class ValidatorError(ValueError, ParameterError):
     """A signal that a validator has encountered an internal error."""
 
 
-class ValidatorFailure(ValueError, ParameterError):
+class ValidationFailure(ValueError, ParameterError):
     """A signal that a validator has rejected a candidate value."""
