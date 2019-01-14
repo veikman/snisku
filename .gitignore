@@ -1,0 +1,9 @@
+.pytest*
+*egg-info
+deb_dist
+dist
+__pycache__
+.cache
+*.pyc
+*.tar.gz
+*.deb
