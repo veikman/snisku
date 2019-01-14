@@ -24,10 +24,14 @@ class Parameter():
                  parser=lambda v: v, dumper=lambda v: v,
                  validator=lambda v: True,
                  title=None, description=None):
+        assert key is not None
         self.key = key
         self.default = default
+        assert callable(parser)
         self.parser = parser
+        assert callable(dumper)
         self.dumper = dumper
+        assert callable(validator)
         self.validator = validator
 
     def retrieve(self, kvs, parser=None, validator=None):
