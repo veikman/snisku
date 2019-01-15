@@ -10,7 +10,7 @@
 import pytest
 
 # Local:
-from .param import Parameter
+from .param import BaseParameter as Parameter
 from .exc import ParserError
 from .exc import ValidatorError
 from .exc import ValidationFailure

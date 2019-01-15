@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Snisku parameters."""
+"""Snisku parameters. Base module."""
 
 ###########
 # IMPORTS #
@@ -17,7 +17,7 @@ from .exc import ValidationFailure
 #############
 
 
-class Parameter():
+class BaseParameter():
     """A model of a parameter known to and needed in an application."""
 
     def __init__(self, key=None, default=None,

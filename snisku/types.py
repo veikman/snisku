@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Implementations of Parameter for various common data types."""
+"""Implementations of BaseParameter for various common data types."""
 
 #############
 # IMPORTS #
@@ -10,7 +10,7 @@
 import arrow
 
 # Local:
-from .param import Parameter
+from .param import BaseParameter
 
 
 #############
@@ -18,7 +18,7 @@ from .param import Parameter
 #############
 
 
-class ArrowParameter(Parameter):
+class ArrowParameter(BaseParameter):
     """A parameter representing a date and time using Arrow."""
 
     def __init__(self, parser=arrow.get, dumper=lambda a: a.format(),
