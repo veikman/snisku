@@ -4,6 +4,7 @@ deb_dist
 dist
 __pycache__
 .cache
+.mypy_cache
 *.pyc
 *.tar.gz
 *.deb

@@ -57,7 +57,7 @@ def test_positive_integer_validation_failure():
 
 
 def test_integer_validator_error():
-    p = Parameter(key='a', parser=int, validator=lambda v: v/0)
+    p = Parameter(key='a', parser=int, validator=lambda v: v / 0)
     kvs = dict(a=1)
     with pytest.raises(ValidatorError):
         p.retrieve(kvs)

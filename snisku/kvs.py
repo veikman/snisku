@@ -57,6 +57,15 @@ class KeyValueStore(dict):
 
         return contents
 
+    def clear(self, signal=True):
+        """Extend parent method for signalling."""
+        prior_keys = set(self.keys())
+        super().clear()
+        if signal:
+            # Signal change.
+            for key in prior_keys:
+                self._signal(key, reset=True)
+
     def _signal(self, key, **kwargs):
         """Invite or provoke side effects by sending a signal.
 
@@ -71,4 +80,4 @@ class KeyValueStore(dict):
         as they are loaded from a file.
 
         """
-        dispatcher.send(signal=key, **kwargs)
+        dispatcher.send(signal=key, sender=self, **kwargs)
