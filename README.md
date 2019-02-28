@@ -10,7 +10,7 @@ programmatically but are too small for a database.
 Snisku is a sibling project of [Gunka](https://github.com/veikman/gunka) but
 neither depends upon the other.
 
-Snisku is in an alpha stage. Its API is not stable.
+Snisku is in a beta stage. Its API is not guaranteed to be stable.
 
 ### Installation
 
