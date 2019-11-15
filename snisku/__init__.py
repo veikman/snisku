@@ -28,4 +28,4 @@ from . import ui
 from . import whitelist
 
 __all__: Sequence[str] = ("exc", "kvs", "param", "types", "ui", "whitelist")
-__version__ = '0.1.0'
+__version__ = '0.2.0~SNAPSHOT'

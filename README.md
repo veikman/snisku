@@ -15,7 +15,11 @@ Snisku is in a beta stage. Its API is not guaranteed to be stable.
 ### Installation
 
 Snisku is a regular Python 3 package with an optional, trivial Debian
-build target. Refer to the included Makefile.
+GNU+Linux build target. Refer to the included Makefile.
+
+### Usage
+
+Refer to [project documentation](doc/).
 
 ### Legal
 
