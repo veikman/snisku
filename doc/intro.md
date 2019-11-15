@@ -71,6 +71,7 @@ So: Global parameters, local values.
 Other documents in this project:
 
 * On [side effects](sidefx.md).
+* On [safety mechanisms](safety.md), including typing.
 
 This does not cover every feature of Snisku, nor does it go into detail. Snisku
 code has extensive built-in documentation and type annotations for ease of use
