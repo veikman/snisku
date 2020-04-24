@@ -36,6 +36,13 @@ class AnyIntegerParameter(BaseParameter):
         super().__init__(parser=parser, **kwargs)
 
 
+class AnyRealParameter(BaseParameter):
+    """A parameter for real numbers, represented via floating point."""
+
+    def __init__(self, parser=float, **kwargs):
+        super().__init__(parser=parser, **kwargs)
+
+
 class NonnegativeParameter(BaseParameter):
     """A numeric parameter that can’t be negative."""
 
@@ -46,6 +53,10 @@ class NonnegativeParameter(BaseParameter):
 
 class NonnegativeIntegerParameter(AnyIntegerParameter, NonnegativeParameter):
     """An integer parameter that has to be non-negative."""
+
+
+class NonnegativeRealParameter(AnyRealParameter, NonnegativeParameter):
+    """A real-number parameter that has to be non-negative."""
 
 
 class ArrowParameter(BaseParameter):

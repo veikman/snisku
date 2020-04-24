@@ -14,12 +14,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Snisku.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2019 Viktor Eikman and Icomera AB.
+Copyright 2019–2020 Viktor Eikman and Icomera AB.
 
 """
 
 from typing import Sequence
 
+from . import argparse
 from . import exc
 from . import kvs
 from . import param
@@ -27,5 +28,6 @@ from . import types
 from . import ui
 from . import whitelist
 
-__all__: Sequence[str] = ("exc", "kvs", "param", "types", "ui", "whitelist")
+__all__: Sequence[str] = ("argparse", "exc", "kvs", "param", "types", "ui",
+                          "whitelist")
 __version__ = '0.2.0~SNAPSHOT'
