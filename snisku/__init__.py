@@ -30,4 +30,4 @@ from . import whitelist
 
 __all__: Sequence[str] = ("argparse", "exc", "kvs", "param", "types", "ui",
                           "whitelist")
-__version__ = '0.2.0~SNAPSHOT'
+__version__ = '0.2.0'
