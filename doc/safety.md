@@ -34,7 +34,7 @@ vol.parse_and_validate(-1)     # Raises snisku.exc.ValidationFailure.
 
 ### Errors
 
-Notice that in this example, we handle a string without error. If you’re
+Notice that in the last example, we handle a string without error. If you’re
 handling arbitrary user input, be prepared to deal with `ParserError` and
 `ValidationFailure` for more exotic strings. In addition, an internal error in
 a Snisku application can raise `ValidatorError`. All of these inherit from
@@ -71,10 +71,11 @@ Snisku itself provides some types of parameters in `snisku.types`:
 
 * True/false: `BooleanParameter`.
 * Numbers: `AnyIntegerParameter`, `NonnegativeParameter` and
-  `NonnegativeIntegerParameter`.
+  `NonnegativeIntegerParameter`, as well as equivalent classes for real
+  numbers represented by floats.
 * Date and time: `ArrowParameter`.
 
-In addition, in `snisku.whitelist`, there is a `WhitelistParameter` for
+In addition, in `snisku.option`, there is an `OptionParameter` for
 radio buttons, enums and such.
 
 ## Customization
@@ -99,7 +100,7 @@ The validator is a pure function, not a class method, but if you want multiple
 parameters that all use the same range of 0 to 100, you can define a class for
 them:
 
-```python  
+```python
 class ZeroTo100(NonnegativeIntegerParameter):
     def __init__(self, validator=lambda v: 100 >= v >= 0, **kwargs):
         super().__init__(validator=validator, **kwargs)

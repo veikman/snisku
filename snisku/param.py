@@ -17,6 +17,7 @@ from pydispatch import dispatcher
 # Local:
 from .exc import ParameterError
 from .exc import ParserError
+from .kvs import KeyValueStore
 from .exc import ValidatorError
 from .exc import ValidationFailure
 
@@ -24,6 +25,12 @@ from .exc import ValidationFailure
 #############
 # INTERFACE #
 #############
+
+
+# Types for annotation.
+Parser = Callable[[Hashable], Any]
+Dumper = Callable[[Any], Hashable]
+Validator = Callable[[Any], bool]
 
 
 class BaseParameter(object):
@@ -41,9 +48,9 @@ class BaseParameter(object):
                  key: Hashable = None,
                  ui: Any = None,
                  default: Any = None,
-                 parser: Callable[[Hashable], Any] = lambda v: v,
-                 dumper: Callable[[Any], Hashable] = lambda v: v,
-                 validator: Callable[[Any], bool] = lambda v: True) -> None:
+                 parser: Parser = lambda v: v,
+                 dumper: Dumper = lambda v: v,
+                 validator: Validator = lambda v: True) -> None:
         """Initialize.
 
         Terse help with arguments:
@@ -129,7 +136,8 @@ class BaseParameter(object):
         assert callable(validator)
         self.validator = validator
 
-    def parse_and_validate(self, value, parser=None, validator=None):
+    def parse_and_validate(self, value: Any, parser: Parser = None,
+                           validator: Validator = None) -> Any:
         """Parse and validate passed value.
 
         Return a valid value for self or raise ParameterError.
@@ -154,7 +162,7 @@ class BaseParameter(object):
             s = 'Value ‘{!r}’ is not valid for ‘{}’.'
             raise ValidationFailure(s.format(refined, self.key))
 
-    def default_is_valid(self, **kwargs):
+    def default_is_valid(self, **kwargs) -> bool:
         """Return True if the built-in default is valid.
 
         This is intended for user interfaces that need to know whether to
@@ -169,7 +177,7 @@ class BaseParameter(object):
         else:
             return True
 
-    def retrieve(self, kvs, **kwargs):
+    def retrieve(self, kvs: KeyValueStore, **kwargs) -> Any:
         """Retrieve a value for self from passed key-value store.
 
         This triggers parsing and validation. Return a valid value for self or
@@ -180,7 +188,8 @@ class BaseParameter(object):
         return self.parse_and_validate(kvs.get(self.key, self.default),
                                        **kwargs)
 
-    def store(self, kvs, value, dumper=None, signal=True):
+    def store(self, kvs: KeyValueStore, value: Any, dumper: Dumper = None,
+              signal: bool = True) -> None:
         """Dump passed value into passed key-value store."""
         dumper = dumper or self.dumper
         kvs[self.key] = dumper(value)
@@ -188,7 +197,7 @@ class BaseParameter(object):
             # Signal change.
             self._signal(kvs, new_value=value)
 
-    def reset(self, kvs, signal=True):
+    def reset(self, kvs: KeyValueStore, signal: bool = True) -> None:
         """Remove any value of self from passed key-value store. Return None.
 
         The reset is selective: No other values are removed from the key-value

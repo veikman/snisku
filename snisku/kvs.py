@@ -8,6 +8,8 @@
 
 # Standard:
 import json
+from typing import Any
+from typing import Hashable
 
 # Third party:
 from pydispatch import dispatcher
@@ -32,13 +34,13 @@ class KeyValueStore(dict):
 
     """
 
-    def dump(self, filepath, handler=json.dump):
-        """Dump the contents to named file. Return None."""
+    def dump(self, filepath, handler=json.dump) -> None:
+        """Dump the contents to named file."""
         with open(filepath, mode='w') as f:
             handler(self, f)
 
     def load(self, filepath, handler=json.load,
-             merge=True, new_only=True, signal=True):
+             merge=True, new_only=True, signal=True) -> Any:
         """Load contents of file into self. Also return the contents."""
         with open(filepath, mode='r') as f:
             contents = handler(f)
@@ -57,7 +59,7 @@ class KeyValueStore(dict):
 
         return contents
 
-    def clear(self, signal=True):
+    def clear(self, signal=True) -> None:
         """Extend parent method for signalling."""
         prior_keys = set(self.keys())
         super().clear()
@@ -66,7 +68,7 @@ class KeyValueStore(dict):
             for key in prior_keys:
                 self._signal(key, reset=True)
 
-    def _signal(self, key, **kwargs):
+    def _signal(self, key: Hashable, **kwargs) -> None:
         """Invite or provoke side effects by sending a signal.
 
         In this default implementation, this method sends a parameter-specific

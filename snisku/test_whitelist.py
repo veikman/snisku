@@ -22,9 +22,12 @@ from .kvs import KeyValueStore
 
 
 def test_two_strings():
-    o0 = WhitelistOption('a')
-    o1 = WhitelistOption('b')
-    param = WhitelistParameter(key='p', options=[o0, o1], default=o0.value)
+    with pytest.warns(DeprecationWarning):
+        o0 = WhitelistOption('a')
+    with pytest.warns(DeprecationWarning):
+        o1 = WhitelistOption('b')
+    with pytest.warns(DeprecationWarning):
+        param = WhitelistParameter(key='p', options=[o0, o1], default=o0.value)
 
     kvs = KeyValueStore()
     assert param.retrieve(kvs) == 'a'

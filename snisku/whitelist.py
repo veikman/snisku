@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-"""An implementation of BaseParameter for a whitelist."""
+"""A deprecated precursor to the option module.
+
+This module will be removed in Snisku 1.0.0.
+
+"""
 
 #############
 # IMPORTS #
@@ -8,13 +12,13 @@
 
 # Standard library:
 from typing import Any
-from typing import Callable
 from typing import Hashable
-from typing import Iterable
+from warnings import warn
 
 # Local:
-from .param import BaseParameter
-from .ui import UserInterfacePresenter
+from .option import Option
+from .option import ExhaustiveParameter
+from .option import none  # noqa (0.2.0 backwards compatibily)
 
 
 #############
@@ -22,27 +26,23 @@ from .ui import UserInterfacePresenter
 #############
 
 
-class WhitelistOption(object):
+class WhitelistOption(Option):
     """A single option permissible for a WhitelistParameter."""
 
     def __init__(self, value: Hashable, ui: Any = None) -> None:
-        """Initialize.
-
-        ‘value’ should be hashable and serializable like any Snisku parameter
-        value. If something heavier is needed, subclass WhitelistOption to add
-        it as a secondary value and make an appropriate parser, dumper and
-        validator to translate between the two.
-
-        The optional ‘ui’ parameter can be a snisku.ui.UserInterfacePresenter
-        with a name for the option, but does not have to be.
-
-        """
-        self.value = value
-        self.ui = ui
+        """Initialize."""
+        warn('snisku.whitelist.WhitelistOption is deprecated in favour '
+             'of snisku.option.Option', DeprecationWarning)
+        super().__init__(value, ui)
 
 
 class OptionWhitelist(list):
     """An exhaustive list of options for a WhitelistParameter."""
+
+    def __init__(self, *args, **kwargs):
+        warn('snisku.whitelist.OptionWhiteList is deprecated in favour '
+             'of any tuple of snisku.option.Option', DeprecationWarning)
+        super().__init__(*args, **kwargs)
 
     def by_value(self, value):
         """Look up an option by its value. O(n)."""
@@ -52,36 +52,11 @@ class OptionWhitelist(list):
         raise KeyError('Value ‘{}’ is not whitelisted.')
 
 
-class WhitelistParameter(BaseParameter):
-    """A parameter that allows only specific values."""
+class WhitelistParameter(ExhaustiveParameter):
+    """Identical to ExhaustiveParameter but non-inclusively named."""
 
-    def __init__(self,
-                 options: Iterable[WhitelistOption] = None,
-                 validator: Callable[[Any], bool] = None,
-                 **kwargs: Any) -> None:
-        """Initialize.
-
-        Store passed options as an OptionWhitelist.
-
-        Make a validator if none is supplied.
-
-        """
-        assert options is not None
-        if not isinstance(options, OptionWhitelist):
-            options = OptionWhitelist(options)
-        self.options = options
-
-        if validator is None:
-            def validator(value):
-                try:
-                    self.options.by_value(value)
-                except KeyError:
-                    return False
-                else:
-                    return True
-
-        super().__init__(validator=validator, **kwargs)
-
-
-# An example: A generic option for disabling a parameter.
-none = WhitelistOption(None, ui=UserInterfacePresenter(name='Disabled'))
+    def __init__(self, *args, **kwargs):
+        warn('snisku.whitelist.WhitelistParameter is deprecated in favour '
+             'of any tuple of snisku.option.ExhaustiveParameter',
+             DeprecationWarning)
+        super().__init__(*args, **kwargs)
